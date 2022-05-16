@@ -21,6 +21,9 @@ class Dev(Configuration):
     # Admins list for emailing admins when exception occurs
     ADMINS = [("Alexei Ilin", "alexey_ilin12@mail.ru"),]
 
+    # Custom User model setting (Delete it if wanna use defualt User model)
+    AUTH_USER_MODEL = "blango_auth.User"
+
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
     BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -57,6 +60,7 @@ class Dev(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        'blango_auth',
         'blog',
         'crispy_forms',
         'crispy_bootstrap5',

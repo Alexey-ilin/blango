@@ -1,6 +1,7 @@
 import logging
 
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from blango_auth.models import User
 from django import template
 from blog.models import Post
 
