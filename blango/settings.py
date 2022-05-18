@@ -50,6 +50,14 @@ class Dev(Configuration):
     CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
     CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+    #REGISTRATION
+    REGISTRATION_OPEN = True
+
+    # EMAIL BACKEND
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+    # ACTIVATION_KEY VALIDITTY TIME
+    ACCOUNT_ACTIVATION_DAYS = 7
 
     # Application definition
 
