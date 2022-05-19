@@ -13,6 +13,7 @@ class Tag(models.Model):
     def __str__(self):
       return self.value
 
+
 class Comment(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
@@ -21,13 +22,14 @@ class Comment(models.Model):
     object_id = models.PositiveIntegerField(db_index=True)
     content_object = GenericForeignKey("content_type", "object_id")
 
+
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     published_at = models.DateTimeField(blank=True, null=True, db_index=True)
     title = models.TextField(max_length=100)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     summary = models.TextField(max_length=500)
     content = models.TextField()
     tags = models.ManyToManyField(Tag, related_name="posts")
@@ -35,6 +37,7 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class AuthorProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, 
