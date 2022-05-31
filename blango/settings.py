@@ -99,6 +99,7 @@ class Dev(Configuration):
         'allauth.socialaccount.providers.google',
         'rest_framework',
         'rest_framework.authtoken',
+        'drf_yasg',
     ]
 
     MIDDLEWARE = [
@@ -239,6 +240,13 @@ class Dev(Configuration):
     # IPs allowed to use DjDT
     INTERNAL_IPS = ["192.168.10.93"]
 
+    # Swagger settings
+    SWAGGER_SETTINGS = {
+        "SECURITY_DEFINITIONS": {
+            "Token": {"type": "apiKey", "name": "Authorization", "in": "header"},
+            "Basic": {"type": "basic"},
+        }
+    }
 
 class Prod(Dev):
     DEBUG = False
