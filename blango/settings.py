@@ -66,7 +66,7 @@ class Dev(Configuration):
     ACCOUNT_USERNAME_REQUIRED = False
     ACCOUNT_AUTHENTICATION_METHOD = "email"
 
-    # DRF
+    # DjangoRestFramework
     REST_FRAMEWORK = {
       "DEFAULT_AUTHENTICATION_CLASSES": [
             "rest_framework.authentication.BasicAuthentication",
@@ -76,6 +76,7 @@ class Dev(Configuration):
       "DEFAULT_PERMISSION_CLASSES": [
             "rest_framework.permissions.IsAuthenticatedOrReadOnly"
       ],
+      #throttling
       "DEFAULT_THROTTLE_CLASSES": [
             "blog.api.throttling.AnonSustainedThrottle",
             "blog.api.throttling.AnonBurstThrottle",
@@ -87,8 +88,16 @@ class Dev(Configuration):
             "anon_burst": "10/minute",
             "user_sustained": "5000/day",
             "user_burst": "100/minute",
-      }
-
+      },
+      #pagination
+      "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+      "PAGE_SIZE": 100,
+      #django-filter
+      "DEFAULT_FILTER_BACKENDS": [
+          "django_filters.rest_framework.DjangoFilterBackend",
+          "rest_framework.filters.OrderingFilter"
+      ],
+    
     }
     
     # Application definition
@@ -113,6 +122,7 @@ class Dev(Configuration):
         'rest_framework',
         'rest_framework.authtoken',
         'drf_yasg',
+        'django_filters',
     ]
 
     MIDDLEWARE = [
@@ -260,6 +270,7 @@ class Dev(Configuration):
             "Basic": {"type": "basic"},
         }
     }
+    
 
 class Prod(Dev):
     DEBUG = False
