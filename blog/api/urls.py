@@ -1,13 +1,20 @@
+#django
 from django.urls import path, include, re_path
+#drf
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
+#jwt imports
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+#swagger
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
+#other
 import os
-
+#views, and viewsets
 from blog.api.views import PostViewSet, UserDetail, TagViewSet
 
+#router
 router = DefaultRouter()
 router.register("tags", TagViewSet)
 router.register("posts", PostViewSet)
@@ -50,5 +57,8 @@ urlpatterns += [
         "posts/by-time/<str:period_name>",
         PostViewSet.as_view({"get": "list"}),
         name="posts-by-time"
-    )
+    ),
+    path("jwt/", TokenObtainPairView.as_view(), name="jwt_obtain_pair"),
+    path("jwt/refresh/", TokenRefreshView.as_view(), name="jwt_refresh"),
+
 ]
