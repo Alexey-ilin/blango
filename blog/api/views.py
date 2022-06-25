@@ -22,9 +22,10 @@ from blog.api.serializers import (
     UserSerializer, 
     PostDetailSerializer, 
     TagSerializer,
+    CommentSerializer
 )
 #models
-from blog.models import Post, Tag
+from blog.models import Post, Tag, Comment
 from blango_auth.models import User
 #permissions
 from blog.api.permissions import AuthorModifyOrReadOnly, IsAdminUserForObject
