@@ -7,7 +7,7 @@ from django_registration.forms import RegistrationForm
 class BlangoRegistrationForm(RegistrationForm):
     class Meta(RegistrationForm.Meta):
         model = User
-    
+
     def __init__(self, *args, **kwargs):
         super(BlangoRegistrationForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()

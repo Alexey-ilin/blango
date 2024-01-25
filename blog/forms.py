@@ -6,10 +6,9 @@ from crispy_forms.layout import Submit
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['content']
+        fields = ["content"]
     
     def __init__(self, *args, **kwargs):
         super(CommentForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.add_input(Submit('sumbit', 'Submit'))
-  
+        self.helper = FormHelper(self)
+        self.helper.add_input(Submit('submit', 'Submit'))
