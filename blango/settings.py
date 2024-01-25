@@ -39,12 +39,18 @@ class Dev(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        #custom
         'blog',
         'crispy_forms',
         "crispy_bootstrap5",
         "debug_toolbar",
         "blango_auth",
         "django_registration",
+        #allauth
+        'allauth',
+        'allauth.account',
+        'allauth.socialaccount',
+        'allauth.socialaccount.providers.google',
     ]
 
     MIDDLEWARE = [
@@ -56,6 +62,8 @@ class Dev(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        #allauth middleware
+        "allauth.account.middleware.AccountMiddleware",
     ]
 
     ROOT_URLCONF = 'blango.urls'
@@ -215,6 +223,26 @@ class Dev(Configuration):
     ACCOUNT_ACTIVATION_DAYS = 7
     
     LOGOUT_REDIRECT_URL = "/"
+
+    # allauth
+    SITE_ID = 1
+    ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+    ACCOUNT_EMAIL_REQUIRED = True
+    ACCOUNT_USERNAME_REQUIRED = False
+    ACCOUNT_AUTHENTICATION_METHOD = "email"
+    # Provider specific settings
+    SOCIALACCOUNT_PROVIDERS = {
+        'google': {
+            # For each OAuth based provider, either add a ``SocialApp``
+            # (``socialaccount`` app) containing the required client
+            # credentials, or list them here:
+            'APP': {
+                'client_id': '42265024635-p6tro7eleqo3rf680845ihttlkbshjqu.apps.googleusercontent.com', ### 
+                'secret': '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',    ### DONOT HARDCODE IN PROD
+                'key': ''
+            }
+        }
+    }
 
 class Prod(Dev):
     DEBUG = False
