@@ -239,8 +239,6 @@ class Dev(Configuration):
             # (``socialaccount`` app) containing the required client
             # credentials, or list them here:
             'APP': {
-                # 'client_id': '42265024635-p6tro7eleqo3rf680845ihttlkbshjqu.apps.googleusercontent.com', ### 
-                # 'secret': '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',    ### DONOT HARDCODE IN PROD
                 'key': ''
             }
         }
