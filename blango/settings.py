@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from configurations import Configuration, values
+from dotenv import load_dotenv
+import os
+
+
 
 class Dev(Configuration):
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -239,6 +243,8 @@ class Dev(Configuration):
             # (``socialaccount`` app) containing the required client
             # credentials, or list them here:
             'APP': {
+                'client_id': os.environ.get("google_client_id"),
+                'client_secret': os.environ.get("google_client_secret"),
                 'key': ''
             }
         }

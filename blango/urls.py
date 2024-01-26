@@ -26,6 +26,8 @@ from django.conf import settings
 
 from django_registration.backends.activation.views import RegistrationView
 
+from blog.api.urls import router
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', blog.views.index),
@@ -35,8 +37,9 @@ urlpatterns = [
     path('accounts/register/', RegistrationView.as_view(form_class=BlangoRegistrationForm), name="django_registration_register"),
     path('accounts/', include('django_registration.backends.activation.urls')),
     path('accounts/', include('allauth.urls'))
-    
 ]
+
+urlpatterns += router.urls
 
 if settings.DEBUG:
     urlpatterns += [path('__debug__/', include(debug_toolbar.urls))]

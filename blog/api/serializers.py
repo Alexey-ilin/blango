@@ -6,17 +6,17 @@ from blango_auth.models import User
 class TagSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Tag
-        fields = "__all_"
+        fields = "__all__"
     
 
-class PostSerializer(serializers.HyperlinkedModelSerializer):
+class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ['']
+        fields = "__all__"
     
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['firstname', 'lastname', 'email']
+        fields = ['first_name', 'last_name', 'email']
 
 
