@@ -43,13 +43,9 @@ class Dev(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
-        #custom
+        #project
         'blog',
-        'crispy_forms',
-        "crispy_bootstrap5",
-        "debug_toolbar",
-        "blango_auth",
-        "django_registration",
+        'blango_auth',
         #allauth
         'allauth',
         'allauth.account',
@@ -57,6 +53,13 @@ class Dev(Configuration):
         'allauth.socialaccount.providers.google',
         #drf
         'rest_framework',
+        'rest_framework.authtoken',
+        'rest_framework_simplejwt',
+        #other
+        'crispy_forms',
+        "crispy_bootstrap5",
+        "debug_toolbar",
+        "django_registration",
     ]
 
     MIDDLEWARE = [
@@ -254,7 +257,15 @@ class Dev(Configuration):
     REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
 }
 
 class Prod(Dev):
