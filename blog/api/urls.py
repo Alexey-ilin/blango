@@ -19,7 +19,8 @@ urlpatterns = [
     path('jwt/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('jwt/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('users/<str:email>/', UserDetail.as_view(), name='api_user_detail'),
-    path('users/', UserList.as_view(), name='api_user_list')
+    path('users/', UserList.as_view(), name='api_user_list'),
+    path("posts/by-time/<str:period_name>/", PostViewSet.as_view({"get": "list"}), name="posts-by-time"),
 ]
 
 urlpatterns += router.urls
