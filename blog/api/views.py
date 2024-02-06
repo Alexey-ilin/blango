@@ -62,9 +62,6 @@ class PostViewSet(viewsets.ModelViewSet):
         else:
             #unpublished + author unpublished posts
             queryset = self.queryset.filter(Q(published_at__lte=timezone.now())|Q(author = self.request.user))
-        logger.info(self.args)
-        logger.info(self.kwargs)
-        logger.info(self.request.headers)
         time_period_name = self.kwargs.get('period_name')
         if not time_period_name:
             return queryset
