@@ -31,7 +31,7 @@ class Dev(Configuration):
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
 
-    ALLOWED_HOSTS = ["*"]
+    ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0"]
 
 
     # Application definition
@@ -101,11 +101,25 @@ class Dev(Configuration):
     # Database
     # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+    DB_SQLITE = "sqlite"
+    DB_POSTGRESQL = "postgresql"
+    DATABASES_ALL = {
+        DB_SQLITE: {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        },
+        DB_POSTGRESQL: {
+            "ENGINE": "django.db.backends.postgresql",
+            "HOST": "db",
+            "NAME": os.environ.get("DB_NAME", "postgres"),
+            "USER": os.environ.get("DB_USER", "postgres"),
+            "PASSWORD": "postgres",
+            "PORT": "5432",
+        },
+}
+
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+        'default': DATABASES_ALL[os.environ.get("DJANGO_DB", DB_SQLITE)]
     }
 
 
@@ -212,17 +226,17 @@ class Dev(Configuration):
     }}
 
     #Internal IPs for DDT
-    INTERNAL_IPS = [
-    # ...
-    "127.0.0.1",
-    # ...
-    ]
+    # INTERNAL_IPS = [
+    # # ...
+    # "127.0.0.1",
+    # # ...
+    # ]
 
     # if DOCKER !!!!
-    # if DEBUG:
-    #     import socket  # only if you haven't already imported this
-    #     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-    #     INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
+    if DEBUG:
+        import socket  # only if you haven't already imported this
+        hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+        INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
 
     #custom User Mode
     AUTH_USER_MODEL = "blango_auth.User"

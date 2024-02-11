@@ -51,7 +51,7 @@ class PostApiTestCase(TestCase):
     def test_tag_create_noauth(self):
         self.client.credentials()
         tag = {"value": "tag5"}
-        resp = self.client.post("/api/v1/tags/")
+        resp = self.client.post("/api/v1/tags/", tag)
         self.assertEqual(resp.status_code, status.HTTP_401_UNAUTHORIZED)
 
         
