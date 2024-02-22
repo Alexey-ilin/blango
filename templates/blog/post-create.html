@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load blog_extras crispy_forms_tags %}
+{% block content %}
+    {% row "mt-4" %}
+        {% col %}
+            {% if request.user.is_active %}
+            <h2>Publish Post</h2>
+            {%  crispy post_form %}
+            {% else %}
+            <h2>You have to log in in order to pulish posts</h2>
+            {% endif %}
+        {% endcol %}
+    {% endrow %}
+{% endblock %}

@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.utils.translation import gettext_lazy as _
 
-# Create your models here.
 class BlangoUserManager(UserManager):
     def _create_user(self, email, password, **extra_fields):
         if not email:
@@ -39,4 +38,3 @@ class User(AbstractUser):
 
     def __str__(self):
       return self.email
-

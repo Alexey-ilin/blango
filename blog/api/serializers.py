@@ -1,10 +1,8 @@
-from rest_framework import serializers
-from blog.models import Post, Tag, Comment
+from rest_framework import serializers, viewsets
+from blog.models import Tag, Post, Comment
 from blango_auth.models import User
-from versatileimagefield.serializers import VersatileImageFieldSerializer
 
-
-# Needed for PostSerializer relationships with tags
+#Custom Fields
 class TagField(serializers.SlugRelatedField):
     def to_internal_value(self, data):
         try:
@@ -13,69 +11,58 @@ class TagField(serializers.SlugRelatedField):
           self.fail(f"Tag value {data} is invalid")
 
 
-# Trying Viewsets and routers of Tags
+#Serializers
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
-      model = Tag
-      fields = "__all__"
-
+        model = Tag
+        fields = "__all__"
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "email"]
+        fields = ['first_name', 'last_name', 'email']
 
+class UserDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        exclude = ['password', 'user_permissions']
 
 class CommentSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=False)
-    creator = UserSerializer(read_only=True)
-
     class Meta:
-      model = Comment
-      fields = ["id", "creator", "content", "modified_at", "created_at"]
-      readonly = ["modified_at", "created_at"]
-
+        model = Comment
+        fields = "__all__"
+    creator = serializers.HyperlinkedRelatedField(queryset=User.objects.all(), 
+                                                 lookup_field='email', view_name='api_user_detail')
 
 class PostSerializer(serializers.ModelSerializer):
-    tags = TagField(slug_field="value", 
-        many=True, queryset=Tag.objects.all())
-    author = serializers.HyperlinkedRelatedField(queryset=User.objects.all(),
-        view_name = "api_user_detail", lookup_field='email')
-    hero_image = VersatileImageFieldSerializer(
-      sizes = [
-        ("full_size", "url"),
-        ("thumbnail", "thumbnail__100x100"),
-      ],
-      read_only=True,
-    )
-
+    author = serializers.HyperlinkedRelatedField(lookup_field='email', 
+                                                 view_name='api_user_detail', default=serializers.CurrentUserDefault(), read_only=True)
+                                                #queryset=User.objects.all(), 
+    tags  =  TagField(slug_field='value', many=True, queryset=Tag.objects.all())
     class Meta:
         model = Post
-        exclude = ["ppoi"]
         readonly = ["modified_at", "created_at"]
+    
 
 
 class PostDetailSerializer(PostSerializer):
     comments = CommentSerializer(many=True)
-    hero_image = VersatileImageFieldSerializer(
-        sizes=[
-            ("full_size", "url"),
-            ("thumbnail", "thumbnail__100x100"),
-            ("square_crop", "crop__200x200"),
-        ],
-        read_only=True,
-    )    
 
     def update(self, instance, validated_data):
-        comments = validated_data.pop("comments")
+        comments =  validated_data.pop("comments")
         instance = super(PostDetailSerializer, self).update(instance, validated_data)
         for comment_data in comments:
-            if comment_data.get("id"):
-                # comment has an ID so was pre-existing
+            if comment_data.get('id'):
+                # comment already exists
                 continue
             comment = Comment(**comment_data)
-            comment.creator = self.context["request"].user
+            comment.creator = self.context['request'].user
             comment.content_object = instance
             comment.save()
-
         return instance
+    
+
+
+
+
+

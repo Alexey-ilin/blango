@@ -1,2 +1,5 @@
 {% load blog_extras %}
-<small>By {{ post.author|author_details:request.user }} on {{ post.published_at|date:"M, d Y" }}</small>
+
+<small>
+    By {{ post.author|author_details:request.user }} on {{ post.published_at|date:"F j, Y" }}
+</small>

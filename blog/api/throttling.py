@@ -1,14 +1,13 @@
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 
-
-class AnonSustainedThrottle(AnonRateThrottle):
-    scope = "anon_sustained"
-
-class AnonBurstThrottle(AnonRateThrottle):
+class AnonBurstRateThrottle(AnonRateThrottle):
     scope = "anon_burst"
 
-class UserSustainedThrottle(UserRateThrottle):
-    scope = "user_sustained"
+class AnonSustainedRateThrottle(AnonRateThrottle):
+    scope = "anon_sustained"
 
-class UserBurstThrottle(UserRateThrottle):
+class UserBurstRateThrottle(UserRateThrottle):
     scope = "user_burst"
+
+class UserSustainedRateThrottle(UserRateThrottle):
+    scope = "user_sustained"

@@ -5,13 +5,6 @@
 {% row %}
     {% col %}
         {% include "blog/post-byline.html" %}
-        {% if post.hero_image %}
-            {% row %}
-                {% col %}
-                    <img class="img-fluid" src="{{ post.hero_image.url }}">
-                {% endcol %}
-            {% endrow %}
-        {% endif %}
     {% endcol %}
 {% endrow %}
 {% row %}
@@ -40,4 +33,3 @@
 {% endrow %}
 
 {% endblock %}
-

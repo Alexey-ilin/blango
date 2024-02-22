@@ -1,0 +1,24 @@
+services:
+  
+  blango:
+    build: .
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - DJANGO_DB=postgresql
+      - DB_PASSWORD=example
+    depends_on:
+      - db
+  
+  #postgresql
+  db:
+    image: postgres:15.5
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+        - ./data/db:/var/lib/postgresql/data/
+  
+volumes:
+  blango_data:
+

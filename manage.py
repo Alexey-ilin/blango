@@ -2,12 +2,13 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+from dotenv import load_dotenv
 
 def main():
     """Run administrative tasks."""
+    load_dotenv()
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blango.settings')
-    os.environ.setdefault("DJANGO_CONFIGURATION", "Dev")
+    os.environ.setdefault('DJANGO_CONFIGURATION', 'Dev')
     try:
         from configurations.management import execute_from_command_line
     except ImportError as exc:
