@@ -41,7 +41,6 @@ class PostSerializer(serializers.ModelSerializer):
     tags  =  TagField(slug_field='value', many=True, queryset=Tag.objects.all())
     class Meta:
         model = Post
-        fields = '__all__'
         readonly = ["modified_at", "created_at"]
     
 

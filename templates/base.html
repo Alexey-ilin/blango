@@ -9,7 +9,10 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-          <a class="navbar-brand" href="/">Blango Home</a>
+          <div class="d-flex">
+            <a class="navbar-brand" href="/">Blango Home</a>
+            <a class="d-flex nav-link" href="{% url "create_post" %}">New Post</a>
+          </div>
           <div class="d-flex">
               {% if request.user.is_active %}
                   <a class="nav-link" href="{% url "profile" %}">Profile</a>

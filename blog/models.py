@@ -1,6 +1,8 @@
 from enum import unique
 from django.db import models
 from django.conf  import settings
+from django.utils import timezone
+from django.utils.text import slugify
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
@@ -25,7 +27,7 @@ class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
-    published_at = models.DateTimeField(blank=True, null=True, db_index=True)
+    published_at = models.DateTimeField(blank=True, null=True, db_index=True, default=timezone.now)
     title = models.TextField(max_length=100)
     slug = models.SlugField(unique=True)
     summary = models.TextField(max_length=500)
